@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\TranslationKey;
 use App\Models\TranslationValue;
 
-class TranslationStressTestSeeder extends Seeder
+class TranslationTestDataSeeder extends Seeder
 {
     public function run(): void
     {
