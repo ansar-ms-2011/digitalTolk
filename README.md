@@ -1,7 +1,9 @@
 Translation Management Service API
 ==================================
 
-A Laravel-based API for managing translation keys and their values across multiple languages. This project uses a **repository pattern**, form requests for validation, Laravel queues for processing of large dataset and is powered by JWT-based authentication.
+A Laravel-based API for managing translation keys and their values across multiple languages. This project uses a **repository pattern**, Form requests for validation, Laravel queues for processing of large dataset and is powered by JWT-based authentication.
+The main approach adopted in this project is to use a **translation cache** to store the pre-converted translations in JSON format in a database table to reduce the response time. Furthermore, results are put into cache memory upon first access by the user to even reduce the response time. The cache is updated whenever a translation key is created, updated or deleted automatically by the queue worker using the **translation:rebuild** command. 
+
 
 ⚙️ Requirements
 ---------------
@@ -16,7 +18,9 @@ A Laravel-based API for managing translation keys and their values across multip
 🚀 Setup Instructions
 ---------------------
 
-1. git clone https://github.com/your-username/translation-api.gitcd translation-api
+1. git clone https://github.com/ansar-ms-2011/digitalTolk.git 
+    
+   cd digitalTolk
 
 2. composer install
 
@@ -61,20 +65,20 @@ Feature tests are included for repository and API endpoints.
 🏗️ Design Choices
 ------------------
 
-*   **Repository Pattern**Business logic is abstracted into repositories (TranslationRepository) for clean separation of concerns and easier testing.
+*   **Repository Pattern** Business logic is abstracted into repositories (TranslationRepository) for clean separation of concerns and easier testing.
 
-*   **Form Requests for Validation**Ensures consistent validation and automatic error responses.
+*   **Form Requests for Validation** Ensures consistent validation and automatic error responses.
 
-*   **JWT Authentication**Stateless, secure, and API-friendly authentication layer.
+*   **JWT Authentication** Stateless, secure, and API-friendly authentication layer.
 
-*   **Resourceful Routing**REST-style resource routes (translations.index, translations.store, etc.) for predictable API structure.
+*   **Resourceful Routing** REST-style resource routes (translations.index, translations.store, etc.) for predictable API structure.
 
-*   **Database Transactions**Ensures atomic operations when creating, updating, or deleting translations with multiple values.
+*   **Database Transactions** Ensures atomic operations when creating, updating, or deleting translations with multiple values.
 
-*   **Queue/Events Ready**The architecture is designed so that cache updates, notifications, or external sync jobs can easily be queued when translations change.
+*   **Queue/Events Ready** The architecture is designed so that cache updates, notifications, or external sync jobs can easily be queued when translations change.
 
 
-📦 API Endpoints (Sample)
+📦 API Endpoints
 -------------------------
 
 *   POST /api/login → To log in and receive a JWT token
@@ -93,5 +97,5 @@ Feature tests are included for repository and API endpoints.
 
 *   DELETE / api/translations/{translationKey} → To delete a translation
 
-*   /api/translations-json/{lang} → To get all translations in JSON format for a given language code e.g en, fr, etc.
+*   GET /api/translations-json/{lang} → To get all translations in JSON format for a given language code e.g en, fr, etc.
 
